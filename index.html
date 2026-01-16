@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>DEDKORDONSTYLE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  background:#000;
+  color:#fff;
+  font-family:'Orbitron', Arial, Helvetica, sans-serif;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* ===== BACKGROUND ===== */
+#bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at center,#0000 45%,#000c 88%),
+    linear-gradient(to top,#ffffff10 0%,#111 30%,#000 70%);
+  z-index:-5;
+}
+#lines{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(135deg,#ffffff08 1px,transparent 1px),
+    linear-gradient(45deg,#ffffff08 1px,transparent 1px);
+  background-size:220px 220px;
+  opacity:.15;
+  z-index:-4;
+}
+
+/* ===== MAIN ===== */
+main{
+  position:relative;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+/* ===== TITLE ===== */
+.title{
+  font-size:92px;
+  letter-spacing:10px;
+  font-weight:900;
+  margin-bottom:60px;
+}
+
+/* ===== BUTTONS ===== */
+.buttons{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+}
+.buttons a{
+  width:280px;
+  padding:18px 0;
+  border-radius:14px;
+  text-decoration:none;
+  letter-spacing:3px;
+  font-weight:800;
+  color:#fff;
+  border:1px solid #ffffff35;
+  background:linear-gradient(180deg,#ffffff15,#00000090);
+  transition:.3s;
+}
+.buttons a:hover{
+  background:#fff;
+  color:#000;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  position:fixed;
+  bottom:18px;
+  width:100%;
+  font-size:11px;
+  opacity:.45;
+}
+</style>
+</head>
+
+<body>
+
+<div id="bg"></div>
+<div id="lines"></div>
+
+<main>
+  <div class="title">DEDKORDONSTYLE</div>
+
+  <div class="buttons">
+    <a href="#" target="_blank">MEMBER ALL</a>
+    <a href="#" target="_blank">CONTACT</a>
+  </div>
+</main>
+
+<footer>© 2025 Dedkordon — Designed by Alex</footer>
+
+</body>
+</html>
