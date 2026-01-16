@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>DEDKORDONSTYLE</title>
+<title>DEDKORDON</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,24 +21,11 @@ body{
   text-align:center;
 }
 
-/* ===== BACKGROUND ===== */
-#bg{
+/* ===== CANVAS BG ===== */
+canvas{
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(circle at center,#0000 45%,#000c 88%),
-    linear-gradient(to top,#ffffff10 0%,#111 30%,#000 70%);
-  z-index:-5;
-}
-#lines{
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(135deg,#ffffff08 1px,transparent 1px),
-    linear-gradient(45deg,#ffffff08 1px,transparent 1px);
-  background-size:220px 220px;
-  opacity:.15;
-  z-index:-4;
+  z-index:-10;
 }
 
 /* ===== MAIN ===== */
@@ -80,6 +67,34 @@ main{
   color:#000;
 }
 
+/* CONTACT เล็กกว่า */
+.buttons a.contact{
+  width:200px;
+  padding:14px 0;
+  font-size:12px;
+  opacity:.85;
+}
+
+/* ===== MUSIC BTN ===== */
+#musicBtn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  padding:14px 28px;
+  border-radius:999px;
+  border:1px solid #ffffff40;
+  background:linear-gradient(180deg,#ffffff20,#00000090);
+  color:#fff;
+  font-weight:800;
+  letter-spacing:2px;
+  cursor:pointer;
+  backdrop-filter:blur(12px);
+}
+#musicBtn:hover{
+  background:#fff;
+  color:#000;
+}
+
 /* ===== FOOTER ===== */
 footer{
   position:fixed;
@@ -93,19 +108,113 @@ footer{
 
 <body>
 
-<div id="bg"></div>
-<div id="lines"></div>
+<!-- ===== YOUTUBE MUSIC (AUTO) ===== -->
+<iframe id="yt"
+src="https://www.youtube.com/embed/ETL8RLZrvek?start=110&autoplay=1&mute=1&controls=0&loop=1&playlist=ETL8RLZrvek"
+allow="autoplay"
+style="display:none"></iframe>
+
+<canvas id="space"></canvas>
 
 <main>
   <div class="title">DEDKORDONSTYLE</div>
 
   <div class="buttons">
-    <a href="#" target="_blank">MEMBER ALL</a>
-    <a href="#" target="_blank">CONTACT</a>
+    <a href="https://gang.fivemlist.info/dkdstyle2026" target="_blank">MEMBER ALL</a>
+    <a class="contact" href="https://www.facebook.com/zigar.Dereck.2024" target="_blank">CONTACT</a>
   </div>
 </main>
 
+<div id="musicBtn">⏸ MUSIC</div>
+
 <footer>© 2025 Dedkordon — Designed by Alex</footer>
+
+<script>
+/* ===== MUSIC TOGGLE ===== */
+const yt=document.getElementById("yt");
+const btn=document.getElementById("musicBtn");
+let playing=true;
+
+// unmute auto หลังโหลด
+setTimeout(()=>{
+  yt.src = yt.src.replace("mute=1","mute=0");
+},1500);
+
+btn.onclick=()=>{
+  if(playing){
+    yt.src = yt.src.replace("mute=0","mute=1");
+    btn.textContent="▶ MUSIC";
+    playing=false;
+  }else{
+    yt.src = yt.src.replace("mute=1","mute=0");
+    btn.textContent="⏸ MUSIC";
+    playing=true;
+  }
+};
+
+/* ===== STAR + METEOR ===== */
+const canvas=document.getElementById("space");
+const ctx=canvas.getContext("2d");
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+}
+window.onresize=resize;resize();
+
+const stars=[...Array(220)].map(()=>({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  r:Math.random()*1.5+0.3,
+  s:Math.random()*0.4+0.2
+}));
+
+let meteors=[];
+
+function spawnMeteor(){
+  meteors.push({
+    x:Math.random()*canvas.width,
+    y:-50,
+    vx:Math.random()*6+6,
+    vy:Math.random()*6+6,
+    life:0
+  });
+}
+
+setInterval(spawnMeteor,1800);
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // stars
+  ctx.fillStyle="#fff";
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.y+=s.s;
+    if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width;}
+  });
+
+  // meteors
+  meteors.forEach((m,i)=>{
+    ctx.strokeStyle="rgba(255,255,255,.8)";
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(m.x,m.y);
+    ctx.lineTo(m.x-m.vx*4,m.y-m.vy*4);
+    ctx.stroke();
+
+    m.x+=m.vx;
+    m.y+=m.vy;
+    m.life++;
+
+    if(m.life>60) meteors.splice(i,1);
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
 
 </body>
 </html>
